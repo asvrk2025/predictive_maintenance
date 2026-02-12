@@ -101,7 +101,7 @@ with result_col:
             #Call backend API and get the fault_prob of class 1 (Backend API is designed to give the fault probability of class 1)
             response = requests.post (
                 "https://asvravi-asv-predictive-maintenance-backend.hf.space/v1/PredictiveMaintenance",
-                json=input_data
+                json=input_df
                 )
             if response.status_code == 200:
                 result = response.json ()
