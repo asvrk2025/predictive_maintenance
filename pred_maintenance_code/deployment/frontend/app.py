@@ -1,6 +1,4 @@
 import streamlit as st
-from huggingface_hub import hf_hub_download
-import joblib
 import numpy as np
 import pandas as pd
 
@@ -11,19 +9,6 @@ st.set_page_config(
     page_title="Engine Predictive Maintenance",
     layout="wide"
 )
-
-# -----------------------------
-# Load Model (cached)
-# -----------------------------
-@st.cache_resource
-def load_model():
-    model_path = hf_hub_download(
-        repo_id="asvravi/asv-cs-preventive-maintenance",
-        filename="preventive_maintenance_model_v1.joblib"
-    )
-    return joblib.load(model_path)
-
-model = load_model()
 
 # -----------------------------
 # Reduce HF default padding
@@ -112,11 +97,19 @@ with result_col:
                 "coolant_temp": coolant_temp
             }])
 
-            """
-            Call backend API and get the fault_prob
-            """
-            #get the probability of class 1
-            fault_prob = model.predict_proba(input_df)[0][1]
+            
+            #Call backend API and get the fault_prob of class 1 (Backend API is designed to give the fault probability of class 1)
+            response = requests.post (
+                "https://asvravi-asv-predictive-maintenance-backend.hf.space/v1/PredictiveMaintenance",
+                json=input_data
+                )
+            if response.status_code == 200:
+                result = response.json ()
+                fault_prob = result.get ("fault_probability")  # Extract only the value
+            else:
+                st.error (f"Error in API request - {response.status_code}")
+
+            #get the final prediction based on fault probability and the user defined threshold
             prediction = 1 if fault_prob >= threshold else 0
 
             if prediction == 1:
