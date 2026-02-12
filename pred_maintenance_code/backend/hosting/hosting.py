@@ -21,7 +21,7 @@ except RepositoryNotFoundError:
 
 # Upload Streamlit app files stored in the folder called deployment_files
 api.upload_folder(
-    folder_path="CS_Preventive_Maintenance/deployment/backend",  #Local folder path
+    folder_path="pred_maintenance_code/deployment/backend",  #Local folder path
     repo_id=repo_id,  # Hugging face space id
     repo_type="space", # Hugging face repo type "space"
 )
