@@ -154,3 +154,18 @@ print("Artifacts generated:")
 print("- data/raw/engine_data.csv")
 print("- data/processed/X_train.csv, X_test.csv, y_train.csv, y_test.csv")
 print("- config/config.json")
+
+# -----------------------------
+# Upload to Hugging Face
+# -----------------------------
+files = ["X_train.csv","X_test.csv","y_train.csv","y_test.csv"]
+
+# uploading the train and test csv files to Hugging Face
+for file_path in files:
+    api.upload_file(
+        path_or_fileobj=file_path,
+        path_in_repo=file_path.split("/")[-1],  # just the filename
+        repo_id="asvravi/asv-cs-preventive-maintenance",
+        repo_type="dataset",
+    )
+
