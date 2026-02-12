@@ -1,0 +1,142 @@
+import streamlit as st
+from huggingface_hub import hf_hub_download
+import joblib
+import numpy as np
+import pandas as pd
+
+# -----------------------------
+# App Config (MUST BE FIRST)
+# -----------------------------
+st.set_page_config(
+    page_title="Engine Predictive Maintenance",
+    layout="wide"
+)
+
+# -----------------------------
+# Load Model (cached)
+# -----------------------------
+@st.cache_resource
+def load_model():
+    model_path = hf_hub_download(
+        repo_id="asvravi/asv-cs-preventive-maintenance",
+        filename="preventive_maintenance_model_v1.joblib"
+    )
+    return joblib.load(model_path)
+
+model = load_model()
+
+# -----------------------------
+# Reduce HF default padding
+# -----------------------------
+st.markdown("""
+<style>
+.block-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+div[data-testid="stVerticalBlock"] {
+    gap: 0.6rem;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# -----------------------------
+# Title & Description
+# -----------------------------
+st.markdown("""
+<h2 style="margin-top: 0.5rem;">
+🔧 Engine Predictive Maintenance System
+</h2>
+""", unsafe_allow_html=True)
+
+st.markdown(
+    "Predict potential engine failures using real-time sensor inputs. "
+    "The model is optimized for **high fault recall** to minimize missed failures."
+)
+
+# -----------------------------
+# Sidebar Controls
+# -----------------------------
+st.sidebar.header("⚙️ Prediction Settings")
+
+threshold = st.sidebar.slider(
+    "Fault Detection Threshold",
+    min_value=0.1,
+    max_value=0.9,
+    value=0.5,
+    step=0.05,
+    help="Lower values increase fault detection (recall), higher values reduce false alarms"
+)
+
+# -----------------------------
+# Layout (Side-by-side)
+# -----------------------------
+input_col, result_col = st.columns([2.2, 1.2])
+
+# -----------------------------
+# Engine Sensor Inputs
+# -----------------------------
+with input_col:
+    st.subheader("🧮 Engine Sensor Inputs")
+
+    c1, c2 = st.columns(2)
+
+    with c1:
+        engine_rpm = st.number_input("Engine RPM", value=1500.0)
+        lub_oil_pressure = st.number_input("Lub Oil Pressure", value=4.0)
+        fuel_pressure = st.number_input("Fuel Pressure", value=3.5)
+
+    with c2:
+        coolant_pressure = st.number_input("Coolant Pressure", value=2.5)
+        lub_oil_temp = st.number_input("Lub Oil Temp (°C)", value=85.0)
+        coolant_temp = st.number_input("Coolant Temp (°C)", value=90.0)
+
+    predict_btn = st.button("🔍 Predict Engine Health", use_container_width=False)
+
+# -----------------------------
+# Prediction Result
+# -----------------------------
+with result_col:
+    st.subheader("📊 Prediction Result")
+
+    with st.container(border=True):
+        if predict_btn:
+            input_df = pd.DataFrame([{
+                "engine_rpm": engine_rpm,
+                "lub_oil_pressure": lub_oil_pressure,
+                "fuel_pressure": fuel_pressure,
+                "coolant_pressure": coolant_pressure,
+                "lub_oil_temp": lub_oil_temp,
+                "coolant_temp": coolant_temp
+            }])
+
+            """
+            Call backend API and get the fault_prob
+            """
+            #get the probability of class 1
+            fault_prob = model.predict_proba(input_df)[0][1]
+            prediction = 1 if fault_prob >= threshold else 0
+
+            if prediction == 1:
+                st.error(
+                    f"⚠️ **FAULT LIKELY**\n\n"
+                    f"Estimated Fault Probability: **{fault_prob:.2f}**\n\n"
+                    "Immediate inspection or preventive maintenance is recommended."
+                )
+            else:
+                st.success(
+                    f"✅ **ENGINE HEALTHY**\n\n"
+                    f"Estimated Fault Probability: **{fault_prob:.2f}**\n\n"
+                    "No immediate maintenance action required."
+                )
+
+# -----------------------------
+# Footer
+# -----------------------------
+st.markdown("---")
+st.caption(
+    "Model: Tuned XGBoost | Objective: Predictive Maintenance | "
+    "Optimized for high fault recall to reduce missed failures"
+)
