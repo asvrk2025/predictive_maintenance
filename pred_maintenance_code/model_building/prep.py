@@ -115,10 +115,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Save processed datasets
-X_train.to_csv(os.path.join(PROCESSED_DIR, "X_train.csv"), index=False)
-X_test.to_csv(os.path.join(PROCESSED_DIR, "X_test.csv"), index=False)
-y_train.to_csv(os.path.join(PROCESSED_DIR, "y_train.csv"), index=False)
-y_test.to_csv(os.path.join(PROCESSED_DIR, "y_test.csv"), index=False)
+X_train.to_csv("X_train.csv", index=False)
+X_test.to_csv("X_test.csv", index=False)
+y_train.to_csv("y_train.csv", index=False)
+y_test.to_csv("y_test.csv", index=False)
 
 print("✅ Train-test split completed")
 print(f"X_Train size: {X_train.shape}, X_Test size: {X_test.shape}")
