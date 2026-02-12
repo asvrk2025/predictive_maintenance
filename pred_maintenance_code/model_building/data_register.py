@@ -22,7 +22,7 @@ except RepositoryNotFoundError:
 
 # Upload data folder to Hugging face
 api.upload_folder(
-    folder_path="CS_Preventive_Maintenance/data",
+    folder_path="pred_maintenance_code/data",
     repo_id=repo_id,
     repo_type=repo_type,
 )
