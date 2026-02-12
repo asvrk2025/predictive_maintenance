@@ -123,7 +123,7 @@ with result_col:
                 st.success(
                     f"✅ **ENGINE HEALTHY**\n\n"
                     f"Estimated Fault Probability: **{fault_prob:.2f}**\n\n"
-                    "No immediate maintenance action required."
+                    "No immediate maintenance action is required."
                 )
 
 # -----------------------------
