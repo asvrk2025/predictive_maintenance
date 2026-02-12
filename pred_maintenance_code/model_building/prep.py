@@ -7,12 +7,17 @@ Responsibilities:
 - Train-test split (stratified)
 - Persist processed datasets & config
 """
-
+# Import required libraries
 import os
 import json
 import pandas as pd
 from datasets import load_dataset
 from sklearn.model_selection import train_test_split
+from huggingface_hub.utils import RepositoryNotFoundError, HfHubHTTPError
+from huggingface_hub import HfApi, create_repo
+
+# Initialize API client
+api = HfApi(token=os.getenv("HF_TOKEN"))
 
 # Constants
 RANDOM_STATE = 42
@@ -57,15 +62,6 @@ print("✅ Environment OK")
 # -----------------------------
 print("📥 Loading dataset from Hugging Face...")
 
-"""
-dataset = load_dataset(
-    "asvravi/asv-cs-preventive-maintenance",
-    split="train",
-    token=os.environ["HF_TOKEN"]
-)
-
-df = dataset.to_pandas()
-"""
 # Define constants for the dataset path
 DATASET_PATH = "hf://datasets/asvravi/asv-cs-preventive-maintenance/engine_data.csv"
 
