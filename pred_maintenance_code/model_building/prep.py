@@ -115,10 +115,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Save processed datasets
-X_train.to_csv("X_train.csv", index=False)
-X_test.to_csv("X_test.csv", index=False)
-y_train.to_csv("y_train.csv", index=False)
-y_test.to_csv("y_test.csv", index=False)
+X_train.to_csv("Xtrain.csv", index=False)
+X_test.to_csv("Xtest.csv", index=False)
+y_train.to_csv("ytrain.csv", index=False)
+y_test.to_csv("ytest.csv", index=False)
 
 print("✅ Train-test split completed")
 print(f"X_Train size: {X_train.shape}, X_Test size: {X_test.shape}")
@@ -154,7 +154,7 @@ print("- config/config.json")
 # -----------------------------
 # Upload to Hugging Face
 # -----------------------------
-files = ["X_train.csv","X_test.csv","y_train.csv","y_test.csv"]
+files = ["Xtrain.csv","Xtest.csv","ytrain.csv","ytest.csv"]
 
 # uploading the train and test csv files to Hugging Face
 for file_path in files:
