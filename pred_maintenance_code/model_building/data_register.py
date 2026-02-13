@@ -5,7 +5,7 @@ from huggingface_hub import HfApi, create_repo
 import os
 
 # Hugging Face repo details
-repo_id = "asvravi/asv-cs-preventive-maintenance"
+repo_id = "asvravi/asv-preventive-maintenance"
 repo_type = "dataset"
 
 # Initialize API client

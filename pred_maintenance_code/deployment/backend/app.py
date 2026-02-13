@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 # -----------------------------
 def load_model():
     model_path = hf_hub_download(
-        repo_id="asvravi/asv-cs-preventive-maintenance",
+        repo_id="asvravi/asv-preventive-maintenance",
         filename="preventive_maintenance_model_v1.joblib"
     )
     return joblib.load(model_path)

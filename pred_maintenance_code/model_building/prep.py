@@ -63,7 +63,7 @@ print("✅ Environment OK")
 print("📥 Loading dataset from Hugging Face...")
 
 # Define constants for the dataset path
-DATASET_PATH = "hf://datasets/asvravi/asv-cs-preventive-maintenance/engine_data.csv"
+DATASET_PATH = "hf://datasets/asvravi/asv-preventive-maintenance/engine_data.csv"
 
 # Reading data from Hugging face
 df = pd.read_csv(DATASET_PATH)
@@ -161,6 +161,6 @@ for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,
         path_in_repo=file_path.split("/")[-1],  # just the filename
-        repo_id="asvravi/asv-cs-preventive-maintenance",
+        repo_id="asvravi/asv-preventive-maintenance",
         repo_type="dataset",
     )
