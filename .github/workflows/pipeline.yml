@@ -62,7 +62,7 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: python pred_maintenance_code/backend/hosting/hosting.py
+        run: python pred_maintenance_code/hosting/backend_hosting.py
 
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -75,4 +75,4 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: python pred_maintenance_code/frontend/hosting/hosting.py
+        run: python pred_maintenance_code/hosting/frontend_hosting.py
