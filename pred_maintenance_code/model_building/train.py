@@ -38,10 +38,10 @@ Y_TEST_PATH  = f"{DATA_DIR}/y_test.csv"
 """
 
 #paths of various data files
-X_TRAIN_PATH = "hf://datasets/asvravi/asv-cs-preventive-maintenance/Xtrain.csv"
-X_TEST_PATH = "hf://datasets/asvravi/asv-cs-preventive-maintenance/Xtest.csv"
-Y_TRAIN_PATH = "hf://datasets/asvravi/asv-cs-preventive-maintenance/ytrain.csv"
-Y_TEST_PATH = "hf://datasets/asvravi/asv-cs-preventive-maintenance/ytest.csv"
+X_TRAIN_PATH = "hf://datasets/asvravi/asv-preventive-maintenance/Xtrain.csv"
+X_TEST_PATH = "hf://datasets/asvravi/asv-preventive-maintenance/Xtest.csv"
+Y_TRAIN_PATH = "hf://datasets/asvravi/asv-preventive-maintenance/ytrain.csv"
+Y_TEST_PATH = "hf://datasets/asvravi/asv-preventive-maintenance/ytest.csv"
 
 # -----------------------------
 # Load Data
