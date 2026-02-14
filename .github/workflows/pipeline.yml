@@ -49,6 +49,18 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: python pred_maintenance_code/model_building/train.py
+      - name: Upload MLflow Artifacts
+        run: 
+          echo "Current Directory :"
+          pwd
+          echo "List repo contents:"
+          ls -la
+          echo "Search for mlruns:"
+          find . -type d -name "mlruns"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-runs
+          path: mlruns/
 
 
   deploy-backend:
