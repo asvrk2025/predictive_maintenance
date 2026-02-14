@@ -92,10 +92,10 @@ model = XGBClassifier(
     scale_pos_weight=1.2
 )
 
-
 # -----------------------------
 # MLflow Setup
 # -----------------------------
+mlflow.set_tracking_uri("file:./mlruns")
 mlflow.set_experiment("CS_Engine_Predictive_Maintenance")
 
 with mlflow.start_run(run_name=MODEL_NAME):
